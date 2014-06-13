@@ -20,7 +20,7 @@ module Pushr
       def configuration_file=(filename)
         if filename
           filename = Dir.pwd + filename if ! Pathname.new(filename).absolute?
-          if File.exists?(filename)
+          if File.file?(filename)
             @configuration_file = filename
           end
         end
@@ -33,6 +33,7 @@ module Pushr
             klass = hsh['type'].split('::').reduce(Object) { |a, e| a.const_get e }
             klass.new(hsh)
           end
+          Pushr::Daemon.logger.info("read config file: #{configuration_file}")
         else
           Pushr::Configuration.all
         end
