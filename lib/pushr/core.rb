@@ -10,7 +10,7 @@ require 'pushr/redis_connection'
 module Pushr
 
   module Core
-    class ConfigurationError; end
+    class ConfigurationError < Exception; end
 
     NAME = 'Pushr'
     DEFAULTS = {}
@@ -34,7 +34,7 @@ module Pushr
       if File.file?(filename)
         @@configuration_file = filename
       else
-        raise ConfigurationError.new("config file does not exist: #{filename}")
+        raise ConfigurationError, "Pushr config file does not exist: #{filename}"
       end
     end
 
