@@ -15,6 +15,14 @@ module Pushr
       def pid_file=(arg)
         @pid_file = File.join(Dir.pwd, arg) if arg && !Pathname.new(arg).absolute?
       end
+
+      def configuration_file(filename)
+        Pushr::Core.configuration_file = filename
+      end
+
+      def configuration_file
+        Pushr::Core.configuration_file
+      end
     end
   end
 end
