@@ -2,6 +2,7 @@ module Pushr
   class Message
     include ActiveModel::Validations
 
+    attr_accessor :type, :app, :external_id
     validates :app, presence: true
 
     def initialize(attributes = {})
@@ -17,6 +18,10 @@ module Pushr
       else
         return false
       end
+    end
+
+    def to_json
+      MultiJson.dump(to_hash)
     end
 
     def self.next(queue_name, timeout = 3)

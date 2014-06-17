@@ -1,22 +1,13 @@
 module Pushr
   class ConfigurationDummy < Pushr::Configuration
-    attr_accessor :id, :type, :app, :enabled, :connections, :test_attr
+    attr_accessor :test_attr
 
     def name
       :dummy
     end
 
-    def to_json(args = nil)
-      hsh = {
-        id: [@app, name].join(':'),
-        type: self.class.to_s,
-        app: app,
-        enabled: enabled,
-        connections: connections,
-        test_attr: test_attr
-      }
-
-      ::MultiJson.dump(hsh)
+    def to_hash(_ = nil)
+      { id: [@app, name].join(':'), type: self.class.to_s, app: app, enabled: enabled, connections: connections, test_attr: test_attr }
     end
   end
 end

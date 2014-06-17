@@ -1,6 +1,8 @@
 module Pushr
   class Feedback
     include ActiveModel::Validations
+
+    attr_accessor :type, :app
     validates :app, presence: true
     validates :device, presence: true
     validates :follow_up, presence: true
@@ -19,6 +21,10 @@ module Pushr
       else
         return false
       end
+    end
+
+    def to_json
+      MultiJson.dump(to_hash)
     end
 
     def self.next(timeout = 3)
