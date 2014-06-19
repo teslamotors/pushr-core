@@ -32,7 +32,7 @@ module Pushr
 
     def self.redis(&block)
       fail ArgumentError, 'requires a block' unless block
-      @redis ||= Pushr::RedisConnection.create
+      @redis ||= Pushr::RedisConnection.create(options)
       @redis.with(&block)
     end
 
