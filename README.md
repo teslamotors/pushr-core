@@ -129,6 +129,10 @@ Where `<options>` can be:
     -p, --pid-file PATH              Path to write PID file. Relative to Rails root unless absolute.
     -b, --feedback-processor PATH    Path to the feedback processor. Default: lib/pushr/feedback_processor.
     -c, --configuration FILE         Read the configuration from this YAML file (optional)
+    -o, --redis-host HOST            Fully qualified hostname of Redis instance
+    -r, --redis-port PORT            Port number of Redis instance
+    -n, --redis-namespace NAMESPACE  Namespace for Redis connection
+
     -v, --version                    Print this version of push.
     -h, --help                       You're looking at it.
 
