@@ -72,7 +72,7 @@ end
 Pushr::Core.configure do |config|
   x = {}
   x[:namespace] = connection[:namespace] if connection[:namespace]
-  x[:url] = "redis://#{ENV.fetch('REDIS_HOST', connection[:host])}:#{ENV.fetch('REDIS_PORT', connection[:port]) || 6379}/#{ENV.fetch('REDIS_PUSH_DB',connection[:db]) || 0}" if connection[:host] || ENV['REDIS_PORT']
+  x[:url] = "redis://#{ENV.fetch('REDIS_HOST', connection[:host])}:#{ENV.fetch('REDIS_PORT', connection[:port]) || 6379}/#{ENV.fetch('REDIS_PUSH_DB', connection[:db]) || 0}" if connection[:host] || ENV['REDIS_PORT']
   puts x
   end
   config.redis = x
