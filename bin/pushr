@@ -37,10 +37,6 @@ ARGV.options do |opts|
     connection[:db] = db
   end
 
-  opts.on('-a JSON', '--redis-json JSON', String, 'Redis configuration json') do |redis|
-    connection[:redis] = redis
-  end
-
   opts.on('-n NAMESPACE', '--redis-namespace NAMESPACE', String, 'Namespace on redis connection') do |namespace|
     connection[:namespace] = namespace
   end
@@ -74,26 +70,10 @@ ARGV.options do |opts|
 end
 
 Pushr::Core.configure do |config|
-  x = { }
+  x = {}
   x[:namespace] = connection[:namespace] if connection[:namespace]
-  x[:url] = "redis://#{connection[:host]}:#{connection[:port] || 6379}/#{connection[:db] || 0}" if connection[:host]
-  if connection[:redis]
-    json_params = ::MultiJson.load(connection[:redis])
-    redis_params = Hash.new
-    json_params.each do |key, value|
-      redis_params[key.to_sym] = value
-    end
-    if redis_params[:sentinels]
-      old_sentinels = redis_params[:sentinels]
-      redis_params[:sentinels] = []
-      old_sentinels.each do |old_sentinel|
-        new_sentinel = Hash.new
-        old_sentinel.each { |key, value| new_sentinel[key.to_sym] = value }
-        redis_params[:sentinels] << new_sentinel
-      end
-    end
-    x.merge! redis_params
-    puts x
+  x[:url] = "redis://#{ENV.fetch('REDIS_HOST', connection[:host])}:#{ENV.fetch('REDIS_PORT', connection[:port]) || 6379}/#{ENV.fetch('REDIS_PUSH_DB',connection[:db]) || 0}" if connection[:host] || ENV['REDIS_PORT']
+  puts x
   end
   config.redis = x
 end
