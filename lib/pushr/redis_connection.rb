@@ -8,7 +8,7 @@ module Pushr
       namespace = options[:namespace] || Pushr::Core.options[:namespace]
 
       ConnectionPool.new(timeout: options[:timeout] || 1, size: options[:size] || 5) do
-        client = Redis.connect(options)
+        client = Redis.new(options)
 
         if namespace
           Redis::Namespace.new(namespace, redis: client)
